@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chúc Mừng 20/10</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #ffeef8 0%, #ffe0f0 50%, #ffd4e5 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        .container {
+            text-align: center;
+            position: relative;
+            z-index: 10;
+        }
+
+        .input-screen {
+            animation: fadeIn 1s ease-in;
+        }
+
+        .input-screen h1 {
+            font-size: 2.5em;
+            color: #ff69b4;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(255, 105, 180, 0.3);
+        }
+
+        .input-screen input {
+            padding: 15px 30px;
+            font-size: 1.2em;
+            border: 3px solid #ff69b4;
+            border-radius: 50px;
+            outline: none;
+            background: white;
+            color: #ff69b4;
+            margin-bottom: 20px;
+            width: 300px;
+            transition: all 0.3s;
+        }
+
+        .input-screen input:focus {
+            transform: scale(1.05);
+            box-shadow: 0 0 20px rgba(255, 105, 180, 0.5);
+        }
+
+        .input-screen button {
+            padding: 15px 40px;
+            font-size: 1.2em;
+            background: linear-gradient(135deg, #ff69b4, #ff1493);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 5px 15px rgba(255, 105, 180, 0.4);
+        }
+
+        .input-screen button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(255, 105, 180, 0.6);
+        }
+
+        .gift-screen {
+            display: none;
+            animation: fadeIn 1s ease-in;
+        }
+
+        .gift-screen h2 {
+            font-size: 2em;
+            color: #ff69b4;
+            margin-bottom: 30px;
+            animation: pulse 2s infinite;
+        }
+
+        .gift-box {
+            width: 200px;
+            height: 200px;
+            margin: 0 auto;
+            position: relative;
+            cursor: pointer;
+            transition: all 0.5s;
+        }
+
+        .gift-box:hover {
+            transform: scale(1.1) rotate(5deg);
+        }
+
+        .box-base {
+            width: 200px;
+            height: 150px;
+            background: linear-gradient(135deg, #ff1493, #ff69b4);
+            border-radius: 10px;
+            position: absolute;
+            bottom: 0;
+            box-shadow: 0 10px 30px rgba(255, 20, 147, 0.4);
+            animation: float 3s ease-in-out infinite;
+        }
+
+        .box-lid {
+            width: 220px;
+            height: 40px;
+            background: linear-gradient(135deg, #ff69b4, #ffb6c1);
+            border-radius: 10px;
+            position: absolute;
+            top: 0;
+            left: -10px;
+            box-shadow: 0 5px 15px rgba(255, 105, 180, 0.4);
+            transition: all 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        }
+
+        .ribbon {
+            width: 30px;
+            height: 150px;
+            background: linear-gradient(to right, #ffd700, #ffed4e);
+            position: absolute;
+            left: 85px;
+            top: 40px;
+            box-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+        }
+
+        .ribbon-horizontal {
+            width: 200px;
+            height: 30px;
+            background: linear-gradient(to bottom, #ffd700, #ffed4e);
+            position: absolute;
+            left: 0;
+            top: 90px;
+            box-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+        }
+
+        .bow {
+            width: 60px;
+            height: 60px;
+            position: absolute;
+            top: -20px;
+            left: 70px;
+        }
+
+        .bow::before,
+        .bow::after {
+            content: '';
+            position: absolute;
+            width: 30px;
+            height: 40px;
+            background: linear-gradient(135deg, #ffd700, #ffed4e);
+            border-radius: 50% 50% 0 50%;
+            box-shadow: 0 0 15px rgba(255, 215, 0, 0.6);
+        }
+
+        .bow::before {
+            left: 0;
+            transform: rotate(-45deg);
+        }
+
+        .bow::after {
+            right: 0;
+            transform: rotate(45deg) scaleX(-1);
+        }
+
+        .gift-box.opening .box-lid {
+            transform: translateY(-100px) rotateX(-30deg);
+            opacity: 0;
+        }
+
+        .gift-box.opening .bow {
+            animation: bowFly 0.8s forwards;
+        }
+
+        .final-screen {
+            display: none;
+            animation: zoomIn 1s ease-out;
+        }
+
+        .flowers {
+            font-size: 100px;
+            animation: bouquetAppear 1.5s ease-out;
+            margin-bottom: 20px;
+        }
+
+        .letter {
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 15px 50px rgba(255, 105, 180, 0.3);
+            max-width: 500px;
+            margin: 0 auto;
+            animation: letterSlide 1s ease-out 0.5s both;
+            border: 3px solid #ffb6c1;
+        }
+
+        .letter h3 {
+            color: #ff1493;
+            font-size: 2em;
+            margin-bottom: 20px;
+        }
+
+        .letter p {
+            color: #666;
+            font-size: 1.2em;
+            line-height: 1.8;
+            margin-bottom: 15px;
+        }
+
+        .letter .signature {
+            color: #ff69b4;
+            font-style: italic;
+            margin-top: 30px;
+            font-size: 1.1em;
+        }
+
+        /* Particles floating */
+        .particle {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background: #ff69b4;
+            border-radius: 50%;
+            pointer-events: none;
+            animation: particleFloat 4s infinite;
+            opacity: 0;
+        }
+
+        .heart {
+            position: absolute;
+            font-size: 20px;
+            color: #ff69b4;
+            pointer-events: none;
+            animation: heartFloat 5s infinite;
+            opacity: 0;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        @keyframes bowFly {
+            to {
+                transform: translateY(-200px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        @keyframes zoomIn {
+            from { opacity: 0; transform: scale(0.5); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        @keyframes bouquetAppear {
+            from {
+                opacity: 0;
+                transform: translateY(100px) scale(0.3);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        @keyframes letterSlide {
+            from {
+                opacity: 0;
+                transform: translateY(50px) rotateX(-20deg);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) rotateX(0);
+            }
+        }
+
+        @keyframes particleFloat {
+            0% {
+                opacity: 0;
+                transform: translateY(0) translateX(0) rotate(0deg);
+            }
+            50% {
+                opacity: 1;
+            }
+            100% {
+                opacity: 0;
+                transform: translateY(-150px) translateX(50px) rotate(360deg);
+            }
+        }
+
+        @keyframes heartFloat {
+            0% {
+                opacity: 0;
+                transform: translateY(0) scale(0);
+            }
+            50% {
+                opacity: 1;
+                transform: translateY(-100px) scale(1);
+            }
+            100% {
+                opacity: 0;
+                transform: translateY(-200px) scale(0.5);
+            }
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .show {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Screen 1: Input Name -->
+        <div class="input-screen" id="inputScreen">
+            <h1>🌸 Chúc Mừng 20/10 🌸</h1>
+            <p style="color: #ff69b4; font-size: 1.3em; margin-bottom: 30px;">Người phụ nữ tuyệt vời, tên của bạn là gì?</p>
+            <input type="text" id="nameInput" placeholder="Nhập tên của bạn..." />
+            <br>
+            <button onclick="submitName()">Tiếp Tục ✨</button>
+        </div>
+
+        <!-- Screen 2: Gift Box -->
+        <div class="gift-screen" id="giftScreen">
+            <h2>🎁 Nhấn vào hộp quà để mở nhé! 🎁</h2>
+            <div class="gift-box" id="giftBox" onclick="openGift()">
+                <div class="bow"></div>
+                <div class="box-lid"></div>
+                <div class="ribbon"></div>
+                <div class="ribbon-horizontal"></div>
+                <div class="box-base"></div>
+            </div>
+        </div>
+
+        <!-- Screen 3: Final Message -->
+        <div class="final-screen" id="finalScreen">
+            <div class="flowers">💐🌹🌺🌸🌼</div>
+            <div class="letter">
+                <h3>Gửi <span id="userName" style="color: #ff1493;"></span> xinh đẹp,</h3>
+                <p>Chúc em một ngày 20/10 thật tràn đầy niềm vui và hạnh phúc! ✨</p>
+                <p>Em là người phụ nữ tuyệt vời, mạnh mẽ và đầy sức sống. Hãy luôn tự hào về bản thân mình nhé! 💖</p>
+                <p>Chúc em luôn tươi trẻ, xinh đẹp và thành công trong mọi điều em làm. Hãy luôn giữ nụ cười rạng rỡ và trái tim ấm áp của em! 🌟</p>
+                <p class="signature">Với tình yêu thương,<br>Người gửi quà 💝</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let userName = '';
+
+        // Create floating particles
+        function createParticles() {
+            for (let i = 0; i < 20; i++) {
+                setTimeout(() => {
+                    const particle = document.createElement('div');
+                    particle.className = Math.random() > 0.5 ? 'particle' : 'heart';
+                    if (particle.className === 'heart') {
+                        particle.innerHTML = '💖';
+                    }
+                    particle.style.left = Math.random() * 100 + '%';
+                    particle.style.top = Math.random() * 100 + '%';
+                    particle.style.animationDelay = Math.random() * 2 + 's';
+                    document.body.appendChild(particle);
+
+                    setTimeout(() => particle.remove(), 5000);
+                }, i * 200);
+            }
+        }
+
+        setInterval(createParticles, 3000);
+        createParticles();
+
+        function submitName() {
+            const input = document.getElementById('nameInput');
+            userName = input.value.trim();
+            
+            if (userName === '') {
+                alert('Vui lòng nhập tên của bạn! 💕');
+                return;
+            }
+
+            document.getElementById('inputScreen').style.animation = 'fadeIn 0.5s reverse';
+            setTimeout(() => {
+                document.getElementById('inputScreen').classList.add('hidden');
+                document.getElementById('giftScreen').classList.remove('hidden');
+                document.getElementById('giftScreen').style.display = 'block';
+            }, 500);
+        }
+
+        function openGift() {
+            const giftBox = document.getElementById('giftBox');
+            giftBox.classList.add('opening');
+            giftBox.style.pointerEvents = 'none';
+
+            // Create explosion effect
+            for (let i = 0; i < 30; i++) {
+                setTimeout(() => {
+                    const sparkle = document.createElement('div');
+                    sparkle.className = 'particle';
+                    sparkle.style.left = '50%';
+                    sparkle.style.top = '50%';
+                    sparkle.style.background = ['#ff69b4', '#ffd700', '#ff1493', '#ffb6c1'][Math.floor(Math.random() * 4)];
+                    document.body.appendChild(sparkle);
+                    setTimeout(() => sparkle.remove(), 4000);
+                }, i * 50);
+            }
+
+            setTimeout(() => {
+                document.getElementById('giftScreen').style.animation = 'fadeIn 0.5s reverse';
+                setTimeout(() => {
+                    document.getElementById('giftScreen').classList.add('hidden');
+                    document.getElementById('finalScreen').classList.remove('hidden');
+                    document.getElementById('finalScreen').style.display = 'block';
+                    document.getElementById('userName').textContent = userName;
+                }, 500);
+            }, 1500);
+        }
+
+        // Allow Enter key to submit name
+        document.getElementById('nameInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                submitName();
+            }
+        });
+    </script>
+</body>
+</html>
