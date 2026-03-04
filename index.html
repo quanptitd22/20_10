@@ -253,14 +253,14 @@
   }
 
   .heart-container {
-    position: relative;
-    width: 560px;
-    height: 520px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    animation: heartBeat 0.6s ease-out;
-  }
+  position: relative;
+  width: 875px;  /* Tăng từ 560px lên 700px */
+  height: 800px; /* Tăng từ 520px lên 650px */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: heartBeat 0.6s ease-out;
+}
   @keyframes heartBeat {
     0% { transform: scale(0) rotate(-10deg); opacity: 0; }
     60% { transform: scale(1.1) rotate(2deg); }
@@ -280,36 +280,45 @@
     50% { filter: drop-shadow(0 0 40px rgba(224,80,120,0.9)) drop-shadow(0 0 80px rgba(192,57,107,0.5)); }
   }
 
-  .heart-text {
-    position: relative;
-    z-index: 2;
-    text-align: center;
-    padding: 60px 50px;
-    max-width: 320px;
-  }
-  .heart-greeting {
-    font-family: 'Dancing Script', cursive;
-    font-size: 1.5rem;
-    color: var(--gold-light);
-    display: block;
-    margin-bottom: 12px;
-  }
-  .heart-message {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 1.15rem;
-    color: #f9e8f0;
-    line-height: 1.8;
-    font-style: italic;
-  }
+ .heart-text {
+  position: absolute;
+  top: 55%; /* Vị trí cân đối cho trái tim cỡ lớn */
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 2;
+  text-align: center;
+  width: 100%;
+  max-width: 400px; /* Nới rộng khung chữ lên 400px */
+  padding: 0 20px;
+}
+
+.heart-greeting {
+  font-family: 'Dancing Script', cursive;
+  font-size: 1.5rem;
+  color: #000000; /* Đã đổi từ màu vàng/trắng sang Đen */
+  display: block;
+  margin-bottom: 12px;
+  font-weight: bold; /* Thêm độ đậm để chữ đen nổi bật trên nền xanh */
+}
+
+.heart-message {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.2rem; 
+  color: #000000; /* Đã đổi từ trắng sang Đen */
+  line-height: 1.6;
+  font-style: italic;
+  font-weight: 700; /* Thay đổi từ 500 thành 700 để IN ĐẬM rõ nét */
+  text-shadow: 0.5px 0.5px 0px rgba(255,255,255,0.2);/* Tăng độ dày một chút để dễ đọc hơn */
+}
   .cursor {
-    display: inline-block;
-    width: 2px;
-    height: 1.1em;
-    background: var(--gold-light);
-    margin-left: 2px;
-    vertical-align: middle;
-    animation: blink 0.8s step-end infinite;
-  }
+  display: inline-block;
+  width: 2px;
+  height: 1.1em;
+  background: #000000; /* Đổi màu con trỏ thành Đen */
+  margin-left: 2px;
+  vertical-align: middle;
+  animation: blink 0.8s step-end infinite;
+}
   @keyframes blink { 50% { opacity: 0; } }
 
   .arrow-btn {
@@ -398,21 +407,21 @@
   }
 
   /* Đường kẻ thẳng giữa các timeline */
-  .timeline::before {
-    content: '';
-    position: absolute;
-    left: 50%;
-    top: 0;
-    bottom: 0;
-    width: 2px;
-    background: linear-gradient(to bottom,
-      transparent 0%,
-      var(--gold) 5%,
-      var(--gold) 95%,
-      transparent 100%);
-    transform: translateX(-50%);
-    z-index: 1;
-  }
+  /* .timeline::before {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: linear-gradient(to bottom,
+    transparent 0%,
+    var(--gold) 5%,
+    var(--gold) 95%,
+    transparent 100%);
+  transform: translateX(-50%);
+  z-index: 1; /* Đảm bảo z-index nhỏ hơn timeline-card */
+
 
   .timeline-item {
     display: flex;
@@ -438,15 +447,15 @@
     to { opacity: 1; transform: translateY(0); }
   }
 
-  .timeline-dot {
-    position: relative;
-    flex: 0 0 20px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 2;
-    margin: 0 20px;
-  }
+.timeline-dot {
+  position: relative;
+  flex: 0 0 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 10; /* Nút tròn luôn nằm trên cùng */
+  margin: 0 10px; /* Giảm margin để các ô sát vào đường kẻ hơn */
+}
   .timeline-dot::before {
     content: '';
     width: 14px;
@@ -459,19 +468,28 @@
   }
 
   .timeline-card {
-    flex: 1;
-    background: rgba(255,255,255,0.04);
-    border: 1px solid rgba(201,168,76,0.2);
-    border-radius: 12px;
-    padding: 16px 20px;
-    backdrop-filter: blur(10px);
-    transition: border-color 0.3s ease, box-shadow 0.3s ease;
-    max-width: 200px;
-  }
-  .timeline-card:hover {
-    border-color: rgba(201,168,76,0.5);
-    box-shadow: 0 4px 20px rgba(192,57,107,0.2);
-  }
+  flex: 1;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(201,168,76,0.2);
+  border-radius: 12px;
+  padding: 16px 20px;
+  backdrop-filter: blur(10px);
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  max-width: 250px; /* Tăng từ 200px lên 250px để đủ chỗ cho địa chỉ */
+  min-height: 120px; /* Đảm bảo các thẻ có độ cao tương đồng */
+}
+  .timeline-card {
+  position: relative; /* Thêm dòng này */
+  z-index: 5;         /* Thêm dòng này để nổi lên trên đường kẻ */
+  flex: 1;
+  background: rgba(30, 20, 30, 0.9); /* Làm nền đặc hơn một chút (độ alpha 0.9) để che đường kẻ hoàn toàn */
+  border: 1px solid rgba(201, 168, 76, 0.4);
+  border-radius: 12px;
+  padding: 16px 20px;
+  backdrop-filter: blur(15px);
+  transition: all 0.3s ease;
+  max-width: 280px; 
+}
 
   .card-time {
     font-family: 'Dancing Script', cursive;
@@ -490,11 +508,12 @@
     margin-bottom: 4px;
   }
   .card-desc {
-    font-size: 0.85rem;
-    color: rgba(253,246,238,0.6);
-    font-style: italic;
-    line-height: 1.5;
-  }
+  font-size: 0.85rem;
+  color: rgba(253,246,238,0.8); /* Tăng độ sáng cho chữ mô tả dễ đọc hơn */
+  font-style: italic;
+  line-height: 1.4;
+  margin-top: 5px;
+}
   .card-emoji {
     font-size: 1.6rem;
     display: block;
@@ -530,6 +549,8 @@
   .footer-hearts {
     font-size: 1.2rem;
     animation: pulse 2s ease-in-out infinite;
+      color: var(--rose);
+      text-shadow: 0 0 20px rgba(201,57,107,0.5);
     display: block;
     margin-top: 8px;
   }
@@ -554,7 +575,7 @@
 
 <!-- SCREEN 1: ENVELOPE -->
 <div class="screen" id="screen-envelope">
-  <div class="invite-hint">✦NHẤN VÀO ĐÂY ĐI . CÓ MỘT ĐIỀU ĐẶC BIỆT DÀNH CHO CẬU NÈ✦</div>
+  <div class="invite-hint">✦NHẤN VÀO ĐÂY ĐI✦</div>
   <div class="envelope-wrapper" id="envelope" onclick="openEnvelope(event)">
     <div class="envelope-body">
       <div class="flap-bottom"></div>
@@ -574,10 +595,11 @@
   <div class="heart-container">
     <svg class="heart-svg" viewBox="0 0 420 400" xmlns="http://www.w3.org/2000/svg">
       <defs>
-        <radialGradient id="heartGrad" cx="50%" cy="35%" r="60%">
-          <stop offset="0%" stop-color="#e8638a"/>
-          <stop offset="60%" stop-color="#c0396b"/>
-          <stop offset="100%" stop-color="#7b1a3a"/>
+        <radialGradient id="heartGrad" cx="50%" cy="35%" r="70%">
+          <stop offset="0%" stop-color="#e1f5fe"/> 
+          <stop offset="30%" stop-color="#4fc3f7"/>
+          <stop offset="70%" stop-color="#0288d1"/>
+          <stop offset="100%" stop-color="#01579b"/>
         </radialGradient>
         <filter id="glow">
           <feGaussianBlur stdDeviation="4" result="coloredBlur"/>
@@ -612,83 +634,63 @@
   </div>
 
   <div class="timeline" id="timeline">
-    <div class="timeline-item">
-      <div class="timeline-dot"></div>
-      <div class="timeline-card">
-        <span class="card-emoji">🌸</span>
-        <div class="card-time"></div>
-        <div class="card-title"></div>
-        <!-- ✏️ SỬA ĐỊA ĐIỂM Ở ĐÂY -->
-        <div class="card-desc"></div>
-      </div>
-    </div>
-
-    <div class="timeline-item">
-      <div class="timeline-dot"></div>
-      <div class="timeline-card">
-        <span class="card-emoji">🚶‍♂️</span>
-        <div class="card-time"></div>
-        <div class="card-title"></div>
-        <!-- ✏️ SỬA MÔ TẢ Ở ĐÂY -->
-        <div class="card-desc"></div>
-      </div>
-    </div>
-
-    <div class="timeline-item">
-      <div class="timeline-dot"></div>
-      <div class="timeline-card">
-        <span class="card-emoji">☕</span>
-        <div class="card-time"></div>
-        <div class="card-title"></div>
-        <!-- ✏️ SỬA TÊN QUÁN Ở ĐÂY -->
-        <div class="card-desc"></div>
-      </div>
-    </div>
-
-    <div class="timeline-item">
-      <div class="timeline-dot"></div>
-      <div class="timeline-card">
-        <span class="card-emoji">🌹</span>
-        <div class="card-time"></div>
-        <div class="card-title"></div>
-        <!-- ✏️ SỬA NHÀ HÀNG Ở ĐÂY -->
-        <div class="card-desc"></div>
-      </div>
-    </div>
-
-    <div class="timeline-item">
-      <div class="timeline-dot"></div>
-      <div class="timeline-card">
-        <span class="card-emoji">🌙</span>
-        <div class="card-time"></div>
-        <div class="card-title"></div>
-        <!-- ✏️ SỬA ĐỊA ĐIỂM Ở ĐÂY -->
-        <div class="card-desc"></div>
-      </div>
-    </div>
-
-    <div class="timeline-item">
-      <div class="timeline-dot"></div>
-      <div class="timeline-card">
-        <span class="card-emoji">✨</span>
-        <div class="card-time"></div>
-        <div class="card-title"></div>
-        <!-- ✏️ SỬA BÍ MẬT CUỐI NÀY :) -->
-        <div class="card-desc"></div>
-      </div>
+  <div class="timeline-item">
+    <div class="timeline-dot"></div>
+    <div class="timeline-card">
+      <span class="card-emoji">🛵</span>
+      <div class="card-time">16:00</div>
+      <div class="card-title">Bắt đầu hành trình</div>
+      <div class="card-desc">Anh qua đón em</div>
     </div>
   </div>
+
+  <div class="timeline-item">
+    <div class="timeline-dot"></div>
+    <div class="timeline-card">
+      <span class="card-emoji">🎬</span>
+      <div class="card-time">16:30</div>
+      <div class="card-title">Đi xem phim</div>
+      <div class="card-desc">Lotte Centanvil tại Song Hành, An Phú, Thủ Đức.</div>
+    </div>
+  </div>
+
+  <div class="timeline-item">
+    <div class="timeline-dot"></div>
+    <div class="timeline-card">
+      <span class="card-emoji">📸</span>
+      <div class="card-time">19:00</div>
+      <div class="card-title">Vincom Thảo Điền</div>
+      <div class="card-desc">Chụp Photobooth, đi chơi TTTM</div>
+    </div>
+  </div>
+
+  <div class="timeline-item">
+    <div class="timeline-dot"></div>
+    <div class="timeline-card">
+      <span class="card-emoji">🍗</span>
+      <div class="card-time">20:30 - 21:00</div>
+      <div class="card-title">Đi ăng</div>
+      <div class="card-desc">Jolibee or the others.</div>
+    </div>
+  </div>
+
+  <div class="timeline-item">
+    <div class="timeline-dot"></div>
+    <div class="timeline-card">
+      <span class="card-emoji">✨</span>
+      <div class="card-time">22:00 - 22:30</div>
+      <div class="card-title">Đi về</div>
+    </div>
+  </div>
+</div>
 
   <div class="timeline-footer">
-    <p class="footer-text">
-      " —<br>
-     <br>
-      ."
-    </p>
-    <!-- ✏️ SỬA TÊN BẠN Ở ĐÂY -->
-    <span class="footer-sign">— [Tên của bạn] 🌹</span>
-    <span class="footer-hearts">💕 Chúc mừng 8/3 của em 💕</span>
-  </div>
+  <p class="footer-text">
+    "Hẹn em vào ngày 8/3 nha"
+  </p>
+  <span class="footer-sign">💕chồng iuu minh quan💕</span>
+  <span class="footer-hearts">🌹Chúc mừng 8/3 của dợ Hoa iuu dấu 🌹</span>
+</div>
 </div>
 
 <script>
@@ -757,9 +759,12 @@ function fadeTransition(callback) {
 }
 
 // ===== TYPEWRITER =====
-const greeting = 'GỬI HOA XINH ĐẸP 🌸';
+const greeting = '🌸 GỬI HOA XINH ĐẸP 🌸';
 // ✏️ SỬA NỘI DUNG LỜI MỜI Ở ĐÂY
-const message = '\n\n\n';
+const message = `
+Nhân dịp ngày phụ nữ 8/3, anh chúc em ngày càng xinh đẹp, luôn thật vui vẻ, tích cực và gặp được nhiều điều tốt đẹp trong cuộc sống. 
+Mong mọi chuyện sẽ êm đềm và nhẹ nhàng với em hơn. Vì em xứng đáng nhận được điều đó và hơn thế nữa. 
+Cũng nhân dịp này, anh muốn cùng em có một buổi hẹn hò đầu tiên để được gặp nhau cũng như là trao em món quà tinh thần nhỏ vào dịp này.`;
 
 function startTypewriter() {
   const greetingEl = document.getElementById('heart-greeting');
